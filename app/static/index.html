@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Central de Ajuda · Órbita ERP</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='6' fill='%23c74634'/%3E%3Cellipse cx='16' cy='16' rx='14' ry='6' fill='none' stroke='%23c74634' stroke-width='2.5' transform='rotate(-25 16 16)'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --bg: #f5f6f8; --surface: #fff; --surface-2: #f0f2f5; --text: #171a21; --muted: #5b6474;
+      --border: #e2e5ea; --accent: #c74634; --accent-hover: #b13d2d; --accent-soft: #fbece9; --accent-text: #b13d2d;
+      --shadow: 0 1px 2px rgb(16 24 40 / .05), 0 6px 16px rgb(16 24 40 / .06);
+      --pos-rgb: 199 70 52; --neg-rgb: 37 99 235;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      --kw: #7c3aed; --fn: #0369a1;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1115; --surface: #171a21; --surface-2: #1f232c; --text: #e8eaef; --muted: #9199a8;
+        --border: #2a2f3a; --accent: #e5624f; --accent-hover: #f0715e; --accent-soft: rgb(229 98 79 / .14); --accent-text: #f29384;
+        --shadow: 0 1px 2px rgb(0 0 0 / .3), 0 8px 24px rgb(0 0 0 / .25);
+        --pos-rgb: 240 113 94; --neg-rgb: 96 165 250;
+        --kw: #c4b5fd; --fn: #7dd3fc;
+      }
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body { margin: 0; font: 15px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
+    button, input, textarea { font: inherit; color: inherit; }
+    code { font-family: var(--mono); font-size: .9em; }
+    .wrap { max-width: 880px; margin: 0 auto; padding: 0 16px; }
+
+    .topbar { border-bottom: 1px solid var(--border); background: var(--surface); }
+    .topbar .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; gap: 12px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: -.01em; }
+    .brand small { font-weight: 500; color: var(--muted); font-size: inherit; }
+    .badge { font-size: 12px; color: var(--muted); border: 1px solid var(--border); border-radius: 999px; padding: 3px 10px; white-space: nowrap; }
+    .badge b { color: var(--accent-text); font-weight: 600; }
+
+    .hero { padding: 48px 0 28px; background: radial-gradient(1200px 300px at 50% -80px, var(--accent-soft), transparent 70%); }
+    .hero h1 { font-size: clamp(26px, 4vw, 34px); line-height: 1.15; letter-spacing: -.02em; margin: 0 0 8px; }
+    .hero p.lead { margin: 0 0 24px; color: var(--muted); font-size: 16px; max-width: 620px; }
+    .search { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 6px 6px 6px 14px; box-shadow: var(--shadow); transition: border-color .15s, box-shadow .15s; }
+    .search:focus-within { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft), var(--shadow); }
+    .search svg { flex: none; color: var(--muted); }
+    .search input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; padding: 10px 4px; font-size: 16px; }
+    .kbd { font: 12px var(--mono); color: var(--muted); border: 1px solid var(--border); border-radius: 6px; padding: 1px 6px; }
+    .btn { border: 0; border-radius: 10px; padding: 10px 18px; background: var(--accent); color: #fff; font-weight: 600; cursor: pointer; transition: background .15s; }
+    .btn:hover { background: var(--accent-hover); }
+    .btn:disabled { opacity: .65; cursor: progress; }
+    .chips { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 14px; font-size: 13px; color: var(--muted); }
+    .chip { border: 1px solid var(--border); background: var(--surface); border-radius: 999px; padding: 4px 12px; cursor: pointer; font-size: 13px; transition: border-color .15s, color .15s; }
+    .chip:hover { border-color: var(--accent); color: var(--accent-text); }
+    .meta-line { margin-top: 18px; font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 16px; min-height: 20px; }
+
+    .pipeline { list-style: none; margin: 8px 0 24px; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+    .step { position: relative; display: flex; gap: 10px; align-items: center; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 10px 12px; transition: border-color .2s; }
+    .step:not(:last-child)::after { content: ""; position: absolute; right: -9px; top: 50%; width: 8px; height: 2px; background: var(--border); }
+    .step .ico { flex: none; width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; background: var(--surface-2); color: var(--muted); transition: background .2s, color .2s; }
+    .step > div { min-width: 0; }
+    .step b { display: block; font-size: 13px; }
+    .step small { display: block; font-size: 12px; color: var(--muted); font-family: var(--mono); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .step.active { border-color: var(--accent); }
+    .step.active .ico { background: var(--accent-soft); color: var(--accent); animation: pulse 1s ease-in-out infinite; }
+    .step.done .ico { background: var(--accent); color: #fff; }
+    @keyframes pulse { 50% { transform: scale(.88); } }
+
+    .section-title { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin: 8px 0 12px; }
+    .section-title h2 { font-size: 16px; margin: 0; }
+    .section-title span { font-size: 13px; color: var(--muted); }
+    .result { display: flex; gap: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px;
+      margin-bottom: 10px; animation: rise .25s ease both; }
+    .result.top { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .rank { flex: none; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 13px;
+      background: var(--surface-2); color: var(--muted); }
+    .result.top .rank { background: var(--accent); color: #fff; }
+    .result .body { flex: 1; min-width: 0; }
+    .result .head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+    .result h3 { margin: 0; font-size: 16px; letter-spacing: -.01em; }
+    .tag { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--accent-text); background: var(--accent-soft); border-radius: 6px; padding: 2px 7px; }
+    .result p { margin: 0; color: var(--muted); }
+    .result p.clamp { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .foot { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 14px; margin-top: 10px; font-size: 12px; color: var(--muted); }
+    .dist { font-family: var(--mono); background: var(--surface-2); border-radius: 6px; padding: 2px 8px; color: var(--text); }
+    .link { background: none; border: 0; padding: 0; color: var(--accent-text); cursor: pointer; font-size: 12px; font-weight: 600; }
+    @keyframes rise { from { opacity: 0; transform: translateY(6px); } }
+    .result:nth-of-type(2) { animation-delay: .04s } .result:nth-of-type(3) { animation-delay: .08s }
+    .result:nth-of-type(4) { animation-delay: .12s } .result:nth-of-type(5) { animation-delay: .16s }
+
+    .skeleton { height: 96px; border-radius: 14px; margin-bottom: 10px; border: 1px solid var(--border);
+      background: linear-gradient(90deg, var(--surface) 25%, var(--surface-2) 50%, var(--surface) 75%); background-size: 200% 100%; animation: shimmer 1.1s linear infinite; }
+    @keyframes shimmer { to { background-position: -200% 0; } }
+
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; }
+    .empty { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .empty .card { padding: 16px; }
+    .empty .num { font-size: 22px; font-weight: 700; letter-spacing: -.02em; }
+    .empty small { color: var(--muted); font-size: 13px; }
+    .panel { padding: 18px; margin-top: 24px; }
+    .panel h2 { font-size: 16px; margin: 0 0 4px; }
+    .panel > p.sub { margin: 0 0 8px; color: var(--muted); font-size: 13px; }
+
+    .vec-label { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; color: var(--muted); margin: 14px 0 6px; }
+    .vec-label > span:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .vec-label b { color: var(--text); font-weight: 600; }
+    .vec-label > span:last-child { flex: none; font-family: var(--mono); }
+    .vec { display: grid; grid-template-columns: repeat(48, 1fr); gap: 2px; }
+    .vec i { aspect-ratio: 1; border-radius: 2px; }
+    .legend { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 10px; font-size: 12px; color: var(--muted); }
+    .legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .legend i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+    .numbers { font: 12px/1.6 var(--mono); color: var(--muted); background: var(--surface-2); border-radius: 8px; padding: 8px 10px; margin-top: 12px; overflow-x: auto; white-space: nowrap; }
+    pre.sql { margin: 14px 0 0; background: var(--surface-2); border-radius: 10px; padding: 14px; overflow-x: auto; font: 12.5px/1.6 var(--mono); }
+    .k { color: var(--kw); font-weight: 600; } .f { color: var(--fn); }
+
+    details.panel summary { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    details.panel summary::-webkit-details-marker { display: none; }
+    details.panel summary h2 { margin: 0; }
+    details.panel summary .plus { font-size: 22px; line-height: 1; color: var(--muted); transition: transform .2s; }
+    details[open].panel summary .plus { transform: rotate(45deg); }
+    .form { display: grid; gap: 12px; margin-top: 14px; }
+    .form label { font-size: 13px; font-weight: 600; display: grid; gap: 6px; }
+    .form input, .form textarea { border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; background: var(--bg); outline: 0; font-weight: 400; resize: vertical; }
+    .form input:focus, .form textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .form .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .hint { font-size: 12px; color: var(--muted); }
+
+    .toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); opacity: 0; pointer-events: none;
+      background: var(--text); color: var(--bg); padding: 10px 16px; border-radius: 10px; font-size: 14px; transition: opacity .25s, transform .25s; box-shadow: var(--shadow); max-width: calc(100% - 32px); }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    footer { margin: 48px 0 32px; text-align: center; font-size: 12px; color: var(--muted); }
+
+    @media (max-width: 720px) {
+      .pipeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .step::after { display: none; }
+      .empty { grid-template-columns: 1fr; }
+      .vec { grid-template-columns: repeat(24, 1fr); }
+      .badge, .kbd { display: none; }
+      .hero { padding-top: 32px; }
+      .result { padding: 14px; gap: 10px; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">
+      <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="16" cy="16" r="6" fill="var(--accent)"/>
+        <ellipse cx="16" cy="16" rx="14" ry="6" fill="none" stroke="var(--accent)" stroke-width="2.5" transform="rotate(-25 16 16)"/>
+      </svg>
+      <span>Órbita ERP <small>· Central de Ajuda</small></span>
+    </div>
+    <span class="badge">Oracle <b>AI Vector Search</b></span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>Como podemos ajudar?</h1>
+    <p class="lead">Descreva o problema com suas palavras. A busca entende o <b>significado</b> da pergunta, não só as palavras.</p>
+
+    <form class="search" id="form-busca">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="pergunta" placeholder="Ex.: não consigo entrar no sistema" autocomplete="off" required aria-label="Pergunta">
+      <span class="kbd" title="Atalho para focar a busca">/</span>
+      <button class="btn" id="btn-buscar">Buscar</button>
+    </form>
+
+    <div class="chips" id="exemplos"><span>Experimente:</span></div>
+    <div class="meta-line" id="meta-line"></div>
+  </div>
+</section>
+
+<main class="wrap">
+  <ol class="pipeline" aria-label="Etapas da busca">
+    <li class="step" id="st-1">
+      <span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+      <div><b>Pergunta</b><small id="st-1-txt">texto do usuário</small></div>
+    </li>
+    <li class="step" id="st-2">
+      <span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h4M4 12h10M4 17h7M12 7h8M18 12h2M15 17h5"/></svg></span>
+      <div><b>Embedding</b><small id="st-2-txt">384 números</small></div>
+    </li>
+    <li class="step" id="st-3">
+      <span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></span>
+      <div><b>Oracle</b><small id="st-3-txt">VECTOR_DISTANCE</small></div>
+    </li>
+    <li class="step" id="st-4">
+      <span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></span>
+      <div><b>Top 5</b><small id="st-4-txt">menor distância</small></div>
+    </li>
+  </ol>
+
+  <section id="area-resultados">
+    <div class="empty">
+      <div class="card"><div class="num" id="stat-docs">–</div><small>documentos na base de conhecimento</small></div>
+      <div class="card"><div class="num">384</div><small>números por vetor · <code>VECTOR(384, FLOAT32)</code></small></div>
+      <div class="card"><div class="num">COSINE</div><small>distância usada para medir a semelhança</small></div>
+    </div>
+  </section>
+
+  <section class="card panel" id="por-dentro" hidden>
+    <h2>Por dentro da busca</h2>
+    <p class="sub">Cada quadradinho é um dos 384 números do vetor. Quanto mais as cores dos dois vetores coincidem, mais eles apontam para a mesma direção, e menor fica a distância.</p>
+
+    <div class="vec-label"><span><b>Pergunta</b> · <span id="vec-q-txt"></span></span><span>384 dims</span></div>
+    <div class="vec" id="vec-q"></div>
+    <div class="vec-label"><span><b>1º resultado</b> · <span id="vec-d-txt"></span></span><span id="vec-dist"></span></div>
+    <div class="vec" id="vec-d"></div>
+    <div class="legend">
+      <span><i style="background: rgb(var(--pos-rgb))"></i>valor positivo</span>
+      <span><i style="background: rgb(var(--neg-rgb))"></i>valor negativo</span>
+      <span>intensidade = tamanho do valor</span>
+    </div>
+    <div class="numbers" id="numbers"></div>
+
+    <pre class="sql"><span class="k">SELECT</span> id, titulo,
+       <span class="f">VECTOR_DISTANCE</span>(embedding, <span class="f">TO_VECTOR</span>(:pergunta, 384, FLOAT32), <span class="k">COSINE</span>) <span class="k">AS</span> distancia
+<span class="k">FROM</span>   kb_docs
+<span class="k">ORDER BY</span> distancia
+<span class="k">FETCH FIRST</span> 5 <span class="k">ROWS ONLY</span>;</pre>
+  </section>
+
+  <details class="card panel" id="cadastro">
+    <summary><h2>Adicionar à base de conhecimento</h2><span class="plus" aria-hidden="true">+</span></summary>
+    <form class="form" id="form-novo">
+      <label>Título<input id="novo-titulo" maxlength="200" placeholder="Ex.: Horário de manutenção programada" required></label>
+      <label>Resposta<textarea id="novo-texto" rows="4" placeholder="Texto que o cliente vai ler" required></textarea></label>
+      <div class="row">
+        <button class="btn" id="btn-novo">Gerar embedding e gravar no Oracle</button>
+        <span class="hint">O texto vira um vetor de 384 números e é gravado na tabela <code>kb_docs</code>.</span>
+      </div>
+    </form>
+  </details>
+
+  <footer>Grupo 3 · Oracle Database Administration · Busca vetorial com Oracle AI Database 26ai</footer>
+</main>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+  const EXEMPLOS = [
+    "esqueci minha senha",
+    "errei a senha várias vezes e não entra mais",
+    "a SEFAZ recusou minha nota",
+    "como mando cobrança pro cliente",
+    "quero tirar um relatório em planilha",
+    "o sistema está muito devagar",
+  ];
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  EXEMPLOS.forEach((e) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "chip"; b.textContent = e;
+    b.onclick = () => { $("pergunta").value = e; buscar(); };
+    $("exemplos").appendChild(b);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "/" && !["INPUT", "TEXTAREA"].includes(document.activeElement.tagName)) {
+      e.preventDefault(); $("pergunta").focus();
+    }
+  });
+
+  function toast(msg) {
+    const t = $("toast"); t.textContent = msg; t.classList.add("show");
+    clearTimeout(toast.timer); toast.timer = setTimeout(() => t.classList.remove("show"), 2800);
+  }
+
+  async function carregarStats() {
+    try {
+      const s = await (await fetch("/stats")).json();
+      const el = $("stat-docs"); if (el) el.textContent = s.documentos;
+      $("meta-line").innerHTML = `<span>${s.documentos} documentos</span><span>modelo <code>${esc(s.modelo)}</code></span><span>coluna <code>VECTOR(${s.dimensoes}, FLOAT32)</code></span>`;
+    } catch {}
+  }
+
+  function setStep(n, estado, texto) {
+    const el = $("st-" + n);
+    el.classList.remove("active", "done");
+    if (estado) el.classList.add(estado);
+    if (texto !== undefined) $(`st-${n}-txt`).textContent = texto;
+  }
+
+  async function buscar() {
+    const pergunta = $("pergunta").value.trim();
+    if (!pergunta) return;
+    history.replaceState(null, "", "?q=" + encodeURIComponent(pergunta));
+    $("btn-buscar").disabled = true;
+    setStep(1, "done", `"${pergunta}"`);
+    setStep(2, "active", "gerando…");
+    setStep(3, "active", "consultando…");
+    setStep(4, "", "menor distância");
+    $("area-resultados").innerHTML = '<div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>';
+
+    try {
+      const r = await fetch("/search", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pergunta, top_k: 5 }),
+      });
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      const data = await r.json();
+      setStep(2, "done", `${data.dimensoes} dims · ${Math.round(data.tempos_ms.embedding)} ms`);
+      setStep(3, "done", `COSINE · ${Math.round(data.tempos_ms.oracle)} ms`);
+      setStep(4, "done", `${data.resultados.length} resultados`);
+      renderResultados(data);
+      renderPorDentro(data);
+    } catch (e) {
+      [2, 3, 4].forEach((n) => setStep(n, ""));
+      $("area-resultados").innerHTML = `<div class="card panel">Não foi possível buscar agora (${esc(e.message)}). Verifique se os containers estão no ar.</div>`;
+      $("por-dentro").hidden = true;
+    } finally {
+      $("btn-buscar").disabled = false;
+    }
+  }
+
+  function renderResultados(data) {
+    if (!data.resultados.length) {
+      $("area-resultados").innerHTML = '<div class="card panel">A base está vazia. Cadastre um documento abaixo.</div>';
+      return;
+    }
+    $("area-resultados").innerHTML = `
+      <div class="section-title"><h2>Resultados</h2><span>ordenados pela menor distância</span></div>
+      ${data.resultados.map((d, i) => `
+        <article class="result ${i === 0 ? "top" : ""}">
+          <div class="rank">${i + 1}</div>
+          <div class="body">
+            <div class="head"><h3>${esc(d.titulo)}</h3>${i === 0 ? '<span class="tag">Mais próximo</span>' : ""}</div>
+            <p class="${i === 0 ? "" : "clamp"}">${esc(d.texto)}</p>
+            <div class="foot">
+              <span class="dist">distância ${d.distancia.toFixed(4)}</span>
+              <span>id ${d.id}</span>
+              ${i === 0 ? "" : '<button type="button" class="link" hidden>ler mais</button>'}
+            </div>
+          </div>
+        </article>`).join("")}`;
+
+    document.querySelectorAll(".result p.clamp").forEach((p) => {
+      const btn = p.parentElement.querySelector(".link");
+      if (p.scrollHeight > p.clientHeight + 2) {
+        btn.hidden = false;
+        btn.onclick = () => { const fechado = p.classList.toggle("clamp"); btn.textContent = fechado ? "ler mais" : "ler menos"; };
+      }
+    });
+  }
+
+  function pintarVetor(el, vetor, escala) {
+    el.innerHTML = vetor.map((v, i) => {
+      const a = Math.min(1, Math.abs(v) / escala).toFixed(2);
+      const rgb = v >= 0 ? "var(--pos-rgb)" : "var(--neg-rgb)";
+      return `<i style="background: rgb(${rgb} / ${a})" title="dimensão ${i}: ${v}"></i>`;
+    }).join("");
+  }
+
+  function renderPorDentro(data) {
+    const q = data.embedding, d = data.embedding_melhor_resultado || [];
+    const escala = Math.max(...q.concat(d).map(Math.abs)) * 0.6;
+    $("vec-q-txt").textContent = `"query: ${data.pergunta}"`;
+    pintarVetor($("vec-q"), q, escala);
+    if (d.length) {
+      $("vec-d-txt").textContent = data.resultados[0].titulo;
+      $("vec-dist").textContent = `distância ${data.resultados[0].distancia.toFixed(4)}`;
+      pintarVetor($("vec-d"), d, escala);
+    }
+    $("numbers").textContent = `[${q.slice(0, 10).map((x) => x.toFixed(4)).join(", ")}, … mais ${q.length - 10} números]`;
+    $("por-dentro").hidden = false;
+  }
+
+  $("form-busca").addEventListener("submit", (e) => { e.preventDefault(); buscar(); });
+
+  $("form-novo").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    $("btn-novo").disabled = true;
+    try {
+      const r = await fetch("/documents", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ titulo: $("novo-titulo").value.trim(), texto: $("novo-texto").value.trim() }),
+      });
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      const d = await r.json();
+      toast(`Documento #${d.id} gravado no Oracle. Já pode buscar por ele.`);
+      e.target.reset();
+      carregarStats();
+    } catch (err) {
+      toast("Erro ao gravar: " + err.message);
+    } finally {
+      $("btn-novo").disabled = false;
+    }
+  });
+
+  carregarStats();
+  const inicial = new URLSearchParams(location.search).get("q");
+  if (inicial) { $("pergunta").value = inicial; buscar(); }
+</script>
+</body>
+</html>

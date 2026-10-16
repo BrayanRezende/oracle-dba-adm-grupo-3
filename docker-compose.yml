@@ -1,0 +1,34 @@
+name: grupo3
+
+services:
+  oracle:
+    image: container-registry.oracle.com/database/free:latest-lite
+    container_name: grupo3-oracle
+    environment:
+      ORACLE_PWD: ${ORACLE_PWD:-Oracle123}
+      APP_USER: ${APP_USER:-grupo3}
+      APP_USER_PASSWORD: ${APP_USER_PASSWORD:-grupo3}
+      NLS_LANG: AMERICAN_AMERICA.AL32UTF8
+    ports:
+      - "${ORACLE_PORT:-1521}:1521"
+    volumes:
+      - oracle-data:/opt/oracle/oradata
+      - ./docker/oracle/startup:/opt/oracle/scripts/startup:ro
+      - ./sql:/grupo3-sql:ro
+
+  app:
+    build: ./app
+    container_name: grupo3-app
+    restart: on-failure
+    environment:
+      DB_USER: ${APP_USER:-grupo3}
+      DB_PASSWORD: ${APP_USER_PASSWORD:-grupo3}
+      DB_DSN: oracle:1521/FREEPDB1
+    ports:
+      - "${APP_PORT:-8000}:8000"
+    depends_on:
+      oracle:
+        condition: service_healthy
+
+volumes:
+  oracle-data:

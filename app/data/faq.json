@@ -1,0 +1,122 @@
+[
+  {
+    "titulo": "Como redefinir minha senha",
+    "texto": "Na tela de login do Órbita ERP, clique em \"Esqueci minha senha\" e informe o e-mail cadastrado. Você receberá um link válido por 30 minutos para criar uma nova senha. Se o e-mail não chegar, verifique a caixa de spam ou peça ao administrador da sua empresa para reenviar o convite."
+  },
+  {
+    "titulo": "Usuário bloqueado após tentativas de login",
+    "texto": "Após 5 tentativas de login com senha incorreta, o usuário é bloqueado por 15 minutos por segurança. Aguarde o tempo de bloqueio ou peça ao administrador para desbloquear o usuário em Configurações > Usuários > Desbloquear acesso."
+  },
+  {
+    "titulo": "Ativar autenticação em dois fatores (2FA)",
+    "texto": "Acesse Meu Perfil > Segurança e clique em \"Ativar verificação em duas etapas\". Escaneie o QR Code com um aplicativo autenticador (Google Authenticator, Microsoft Authenticator ou similar) e digite o código de 6 dígitos para confirmar. Guarde os códigos de recuperação em local seguro."
+  },
+  {
+    "titulo": "Perdi o celular com o autenticador",
+    "texto": "Se você perdeu o acesso ao aplicativo autenticador, use um dos códigos de recuperação gerados na ativação do 2FA. Se não tiver os códigos, o administrador da empresa pode desativar o 2FA do seu usuário em Configurações > Usuários > Segurança, e você poderá configurar novamente."
+  },
+  {
+    "titulo": "Cadastrar um novo usuário",
+    "texto": "Somente administradores podem cadastrar usuários. Vá em Configurações > Usuários > Novo usuário, informe nome, e-mail e o perfil de acesso. O novo usuário receberá um convite por e-mail para definir a própria senha. O número de usuários depende do plano contratado."
+  },
+  {
+    "titulo": "Perfis de acesso e permissões",
+    "texto": "Cada usuário pertence a um perfil de acesso que define quais módulos ele pode ver e quais ações pode executar (consultar, incluir, alterar, excluir). Para criar ou editar perfis, acesse Configurações > Perfis de acesso. Alterações de permissão valem a partir do próximo login do usuário."
+  },
+  {
+    "titulo": "Mensagem \"Você não tem permissão para acessar esta tela\"",
+    "texto": "Essa mensagem aparece quando o seu perfil de acesso não libera o módulo ou a ação desejada. Solicite ao administrador da sua empresa que inclua a permissão no seu perfil em Configurações > Perfis de acesso. Depois da alteração, saia e entre novamente no sistema."
+  },
+  {
+    "titulo": "Emitir nota fiscal eletrônica (NF-e)",
+    "texto": "No módulo Fiscal, clique em Notas fiscais > Nova NF-e, selecione o cliente, adicione os produtos e confira os impostos calculados. Clique em Transmitir para enviar à SEFAZ. Após a autorização, o DANFE e o XML ficam disponíveis para download e são enviados automaticamente por e-mail ao cliente."
+  },
+  {
+    "titulo": "Nota fiscal rejeitada pela SEFAZ",
+    "texto": "Quando a SEFAZ rejeita uma NF-e, o sistema exibe o código e o motivo da rejeição na tela da nota. Os motivos mais comuns são dados cadastrais do cliente incompletos, NCM inválido ou certificado digital vencido. Corrija a informação indicada e clique em Retransmitir."
+  },
+  {
+    "titulo": "Cancelar uma nota fiscal emitida",
+    "texto": "Notas fiscais autorizadas podem ser canceladas em até 24 horas após a autorização. Abra a nota em Fiscal > Notas fiscais, clique em Cancelar e informe uma justificativa com pelo menos 15 caracteres. Após esse prazo, é necessário emitir uma nota de devolução ou carta de correção, conforme o caso."
+  },
+  {
+    "titulo": "Certificado digital vencido ou inválido",
+    "texto": "Para emitir notas fiscais é necessário um certificado digital A1 válido. Quando o certificado vence, a emissão é bloqueada. Para atualizar, acesse Configurações > Fiscal > Certificado digital, faça upload do novo arquivo .pfx e informe a senha. O sistema avisa por e-mail 30 dias antes do vencimento."
+  },
+  {
+    "titulo": "Emitir boleto para um cliente",
+    "texto": "No módulo Financeiro, abra Contas a receber, selecione o título e clique em Gerar boleto. É preciso ter uma conta bancária com carteira de cobrança configurada em Configurações > Financeiro > Bancos. O boleto pode ser baixado em PDF ou enviado por e-mail direto para o cliente."
+  },
+  {
+    "titulo": "Conciliação bancária",
+    "texto": "Para conciliar, acesse Financeiro > Conciliação bancária e importe o extrato no formato OFX baixado do internet banking. O sistema sugere automaticamente os lançamentos correspondentes por valor e data. Confirme as sugestões ou vincule manualmente os lançamentos que não foram encontrados."
+  },
+  {
+    "titulo": "Lançar uma conta a pagar",
+    "texto": "Em Financeiro > Contas a pagar, clique em Novo lançamento, informe fornecedor, valor, data de vencimento, categoria e centro de custo. Para despesas que se repetem todo mês, marque a opção Recorrente e informe a quantidade de parcelas. Você pode anexar o comprovante ou boleto ao lançamento."
+  },
+  {
+    "titulo": "Pagamento em atraso e juros",
+    "texto": "Ao dar baixa em um título vencido, o Órbita ERP calcula automaticamente multa e juros conforme as regras definidas em Configurações > Financeiro > Multa e juros. Você pode alterar os valores manualmente no momento da baixa, informando o motivo do desconto ou acréscimo."
+  },
+  {
+    "titulo": "Cadastrar um produto",
+    "texto": "Acesse Estoque > Produtos > Novo produto e preencha descrição, unidade de medida, preço de venda, custo e NCM. Para produtos com variações (tamanho, cor), use a aba Grade. O código de barras pode ser digitado ou lido com leitor. Produtos sem NCM não podem ser usados em notas fiscais."
+  },
+  {
+    "titulo": "Ajustar o saldo de estoque",
+    "texto": "Se o saldo do sistema não bate com o físico, faça um ajuste em Estoque > Movimentações > Ajuste de inventário. Informe o produto, a quantidade contada e o motivo. O sistema gera uma movimentação de entrada ou saída com a diferença e mantém o histórico para auditoria."
+  },
+  {
+    "titulo": "Estoque ficando negativo",
+    "texto": "Por padrão, o Órbita ERP não permite vender produtos sem saldo. Se o estoque aparecer negativo, provavelmente a opção \"Permitir estoque negativo\" está ativada em Configurações > Estoque. Verifique também se há notas de entrada pendentes de lançamento, que ainda não somaram ao saldo."
+  },
+  {
+    "titulo": "Importar produtos por planilha",
+    "texto": "Para cadastrar muitos produtos de uma vez, acesse Estoque > Produtos > Importar. Baixe o modelo de planilha, preencha uma linha por produto e faça o upload do arquivo .xlsx ou .csv. O sistema valida os dados e mostra um relatório com as linhas que tiveram erro antes de confirmar a importação."
+  },
+  {
+    "titulo": "Criar um pedido de venda",
+    "texto": "No módulo Vendas, clique em Pedidos > Novo pedido, selecione o cliente, adicione os itens, a condição de pagamento e a forma de entrega. Ao aprovar o pedido, o estoque é reservado. A partir do pedido aprovado é possível faturar e gerar a nota fiscal com um clique."
+  },
+  {
+    "titulo": "Exportar relatórios para Excel ou PDF",
+    "texto": "Todos os relatórios do Órbita ERP possuem os botões Exportar Excel e Exportar PDF no canto superior direito. Aplique os filtros desejados antes de exportar. Relatórios muito grandes (acima de 50 mil linhas) são gerados em segundo plano e você recebe um aviso quando o arquivo estiver pronto."
+  },
+  {
+    "titulo": "Relatório de vendas por período",
+    "texto": "Acesse Relatórios > Vendas > Vendas por período, escolha a data inicial e final e, se quiser, filtre por vendedor, cliente ou produto. O relatório mostra quantidade, faturamento, ticket médio e comparação com o período anterior, e pode ser exibido em tabela ou gráfico."
+  },
+  {
+    "titulo": "Sistema lento ou travando",
+    "texto": "Se o Órbita ERP estiver lento, primeiro verifique sua conexão com a internet e tente atualizar a página com Ctrl+F5. Limpe o cache do navegador e feche abas que não estão em uso. Recomendamos usar Google Chrome ou Microsoft Edge atualizados. Se o problema continuar, consulte a página de status ou abra um chamado."
+  },
+  {
+    "titulo": "Navegadores compatíveis",
+    "texto": "O Órbita ERP funciona nas versões atualizadas do Google Chrome, Microsoft Edge, Mozilla Firefox e Safari. Não há suporte ao Internet Explorer. Para usar o leitor de código de barras e a impressão de etiquetas, recomendamos o Google Chrome."
+  },
+  {
+    "titulo": "Backup dos dados",
+    "texto": "O Órbita ERP faz backup automático de todos os dados a cada 6 horas, com retenção de 30 dias, em servidores em nuvem com redundância. Caso precise de uma cópia própria, o administrador pode solicitar a exportação completa da base em Configurações > Dados > Exportar dados, em formato CSV."
+  },
+  {
+    "titulo": "Integração com e-commerce",
+    "texto": "O Órbita ERP se integra com as principais plataformas de loja virtual. Em Configurações > Integrações, escolha a plataforma e informe a chave de API da loja. Após a conexão, pedidos são importados automaticamente e o estoque é sincronizado a cada 15 minutos."
+  },
+  {
+    "titulo": "Usar a API do sistema",
+    "texto": "Clientes do plano Empresarial têm acesso à API REST do Órbita ERP. Gere um token em Configurações > Integrações > API e use-o no cabeçalho Authorization das requisições. A documentação completa dos endpoints está disponível no portal do desenvolvedor. O limite é de 600 requisições por minuto."
+  },
+  {
+    "titulo": "Alterar o plano ou cancelar a assinatura",
+    "texto": "Para mudar de plano, o administrador deve acessar Configurações > Assinatura e escolher o novo plano; a diferença é cobrada proporcionalmente. O cancelamento pode ser solicitado na mesma tela e passa a valer no fim do ciclo de cobrança atual. Os dados ficam disponíveis para exportação por 60 dias."
+  },
+  {
+    "titulo": "Abrir um chamado no suporte",
+    "texto": "Clique no ícone de ajuda (?) no canto superior direito e escolha Abrir chamado. Descreva o problema, informe a tela em que ocorreu e, se possível, anexe um print. O atendimento funciona de segunda a sexta, das 8h às 18h, e o prazo de primeira resposta é de até 4 horas úteis."
+  },
+  {
+    "titulo": "Alterar dados da empresa",
+    "texto": "Razão social, CNPJ, endereço, inscrição estadual e logotipo são alterados em Configurações > Empresa. O regime tributário (Simples Nacional, Lucro Presumido ou Lucro Real) também é definido nessa tela e influencia o cálculo de impostos das notas fiscais. Somente administradores podem alterar esses dados."
+  }
+]
